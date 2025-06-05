@@ -1,10 +1,13 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from 'react-router'; // use 'react-router-dom' instead of 'react-router'
 import Auth from '../Components/Auth';
 import News from '../Components/News';
 import NotFound from '../Components/NotFound';
 import HomeLayout from '../layouts/HomeLayout';
 import Home from '../pages/Home';
 import CategoryNews from './CategoryNews';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import AuthLayout from '../layouts/AuthLayout';
 
 const router = createBrowserRouter([
   {
@@ -12,17 +15,24 @@ const router = createBrowserRouter([
     element: <HomeLayout />,
     children: [
       { path: '/', element: <Home /> },
-      { path: '/auth', element: <Auth /> },
       {
         path: '/category/:id',
         element: <CategoryNews />,
         loader: () => fetch('/news.json'),
       },
-      {
-        path: '/*',
-        element: <NotFound />,
-      },
     ],
+  },
+  {
+    path: '/auth',
+    element: <AuthLayout />,
+    children: [
+      { path: '/auth/login', element: <Login /> },
+      { path: '/auth/register', element: <Register /> },
+    ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
