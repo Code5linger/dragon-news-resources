@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { use } from 'react';
 import { NavLink } from 'react-router';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Register = () => {
+  const { createUser, setUser } = use(AuthContext);
+
+  const handelRegister = (e) => {
+    e.preventDefault();
+
+    const name = e.target.name.value;
+    const imgURL = e.target.imgURL.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log(name, imgURL);
+
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+      })
+      .catch((error) => alert(error));
+  };
+
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">
@@ -9,7 +30,7 @@ const Register = () => {
           <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
             <div className="card-body">
               <h1 className="text-2xl font-semibold">Register your account</h1>
-              <form className="fieldset">
+              <form onSubmit={handelRegister} className="fieldset">
                 {/* Name */}
                 <label className="label">Name</label>
                 <input
@@ -17,6 +38,7 @@ const Register = () => {
                   type="text"
                   className="input"
                   placeholder="Name"
+                  required
                 />
                 {/* Image URL */}
                 <label className="label">Image URL</label>
@@ -25,19 +47,30 @@ const Register = () => {
                   type="text"
                   className="input"
                   placeholder="Image URL"
+                  required
                 />
                 {/* Emails */}
                 <label className="label">Email</label>
-                <input type="email" className="input" placeholder="Email" />
+                <input
+                  name="email"
+                  type="email"
+                  className="input"
+                  placeholder="Email"
+                  required
+                />
                 {/* Passwords */}
                 <label className="label">Password</label>
                 <input
+                  name="password"
                   type="password"
                   className="input"
                   placeholder="Password"
+                  required
                 />
 
-                <button className="btn btn-neutral mt-4">Register</button>
+                <button type="submit" className="btn btn-neutral mt-4">
+                  Register
+                </button>
                 <p className="font-semibold text-center pt-5">
                   Already Have An Account?{' '}
                   <NavLink className={'text-secondary'} to={'/auth/login'}>
