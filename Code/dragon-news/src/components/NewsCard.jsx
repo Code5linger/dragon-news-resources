@@ -1,9 +1,11 @@
 import React from 'react';
 import { FaEye, FaStar, FaRegBookmark } from 'react-icons/fa';
 import { FiShare2 } from 'react-icons/fi';
+import { Link } from 'react-router';
 
 const NewsCard = ({ news }) => {
-  const { title, image_url, details, total_view, rating, author, tags } = news;
+  const { id, title, image_url, details, total_view, rating, author, tags } =
+    news;
 
   const formatDate = (isoDate) =>
     new Date(isoDate).toLocaleDateString('en-GB', {
@@ -38,7 +40,19 @@ const NewsCard = ({ news }) => {
         </div>
 
         <p className="text-sm text-gray-700">
-          {details.length > 200 ? `${details.slice(0, 200)}...` : details}
+          {details.length > 200 ? (
+            <>
+              {details.slice(0, 200)}...{' '}
+              <Link
+                to={`/news-details/${id}`}
+                className="text-primary font-semibold cursor-pointer hover:underline"
+              >
+                Read More
+              </Link>
+            </>
+          ) : (
+            details
+          )}
         </p>
 
         <div className="flex flex-wrap gap-2 text-xs">
