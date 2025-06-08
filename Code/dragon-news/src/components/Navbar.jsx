@@ -7,14 +7,9 @@ const Navbar = () => {
   const { user, logOutUser } = use(AuthContext);
 
   const handleLogOut = () => {
-    console.log('Log Out!');
     logOutUser()
-      .then(() => {
-        console.log('Logged Out!');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then(() => {})
+      .catch((error) => {});
   };
 
   return (

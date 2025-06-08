@@ -15,8 +15,6 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    console.log(name, imgURL);
-
     createUser(email, password)
       .then((result) => {
         const user = result.user;
@@ -27,7 +25,6 @@ const Register = () => {
             navigate('/');
           })
           .catch((error) => {
-            console.log(error);
             setUser(user);
           });
       })
